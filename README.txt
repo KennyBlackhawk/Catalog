@@ -1,5 +1,5 @@
 This solution is developed on a study purpose.
-The credit should be given .NET 5 REST API Tutorial - Build From Scratch With C#, a course developed by Julio Casal.
+The credit should be given to .NET 5 REST API Tutorial - Build From Scratch With C#, a course developed by Julio Casal.
 
 Course Contents
 1. Getting Started
