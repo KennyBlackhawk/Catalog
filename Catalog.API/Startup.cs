@@ -1,25 +1,20 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Mime;
-using System.Text.Json;
-using System.Threading.Tasks;
 using Catalog.API.Repositories;
 using Catalog.API.Settings;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using MongoDB.Bson.Serialization;
 using MongoDB.Bson.Serialization.Serializers;
 using MongoDB.Driver;
+using System;
+using System.Linq;
+using System.Net.Mime;
+using System.Text.Json;
 
 namespace Catalog.API
 {
@@ -41,14 +36,14 @@ namespace Catalog.API
 
             services.AddSingleton<IMongoClient>(serviceProvider =>
             {
-                
+
                 return new MongoClient(mongoDbSettings.ConnectionString);
             });
 
             //services.AddSingleton<IItemsRepository, InMemItemsRepository>();
             services.AddSingleton<IItemsRepository, MongoDBItemsRepository>();
 
-            services.AddControllers(options => 
+            services.AddControllers(options =>
             {
                 options.SuppressAsyncSuffixInActionNames = false;
             });
@@ -59,8 +54,8 @@ namespace Catalog.API
 
             services.AddHealthChecks()
                 .AddMongoDb(
-                    mongoDbSettings.ConnectionString, 
-                    name: "mongodb", 
+                    mongoDbSettings.ConnectionString,
+                    name: "mongodb",
                     timeout: TimeSpan.FromSeconds(3),
                     tags: new[] { "ready" }
                 );
@@ -85,7 +80,8 @@ namespace Catalog.API
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
-                endpoints.MapHealthChecks("/health/ready", new HealthCheckOptions {
+                endpoints.MapHealthChecks("/health/ready", new HealthCheckOptions
+                {
                     Predicate = (check) => check.Tags.Contains("ready"),
                     ResponseWriter = async (context, report) =>
                     {
@@ -97,7 +93,7 @@ namespace Catalog.API
                                 {
                                     name = entry.Key,
                                     status = entry.Value.Status.ToString(),
-                                    exception = entry.Value.Exception != null? entry.Value.Exception.Message : "none",
+                                    exception = entry.Value.Exception != null ? entry.Value.Exception.Message : "none",
                                     duration = entry.Value.Duration.ToString()
                                 })
                             }
