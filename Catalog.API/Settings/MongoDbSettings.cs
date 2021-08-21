@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace Catalog.API.Settings
+﻿namespace Catalog.API.Settings
 {
     public class MongoDbSettings
     {
@@ -11,7 +6,7 @@ namespace Catalog.API.Settings
         public int Port { get; set; }
         public string User { get; set; }
         public string Password { get; set; }
-        public string ConnectionString 
+        public string ConnectionString
         {
             get
             {
